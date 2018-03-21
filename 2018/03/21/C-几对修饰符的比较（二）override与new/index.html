@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="hexo,github," />
+  <meta name="keywords" content="代码,C#,多态," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="一般教程里的Hexo都是直接用git来部署到github的。但是我明明已经有了Github Desktop了，为啥不直接用呢？ 大致看了下，发现hexo提交的网页实际应该就是public文件夹的内容。因此我只要通过Github Desktop把这个文件夹的内容提交上去，应该也能实现和hexo deploy一样的效果。而且也不用再安装一个git了（明明Github Desktop已经很方便了，单独为">
-<meta name="keywords" content="hexo,github">
+<meta name="description" content="override和new都是用于实现多态的修饰符。 貌似比较通用的译法分别是重写和覆盖，也有分别叫覆盖和隐藏的。个人更倾向于前一种译法，不过也不用在这太纠结。  用法上，二者的区别在于：  override专用于虚拟(virtual)方法、抽象(abstract)方法和接口(interface)，不能用于实方法； 而new则用于实方法，也可用于虚拟方法，但不能用于抽象方法和接口。">
+<meta name="keywords" content="代码,C#,多态">
 <meta property="og:type" content="article">
-<meta property="og:title" content="测试一下新的网页提交方式">
-<meta property="og:url" content="http://yoursite.com/2018/03/18/测试一下新的网页提交方式/index.html">
+<meta property="og:title" content="C#几对修饰符的比较（二）override与new">
+<meta property="og:url" content="http://yoursite.com/2018/03/21/C-几对修饰符的比较（二）override与new/index.html">
 <meta property="og:site_name" content="活着真好。">
-<meta property="og:description" content="一般教程里的Hexo都是直接用git来部署到github的。但是我明明已经有了Github Desktop了，为啥不直接用呢？ 大致看了下，发现hexo提交的网页实际应该就是public文件夹的内容。因此我只要通过Github Desktop把这个文件夹的内容提交上去，应该也能实现和hexo deploy一样的效果。而且也不用再安装一个git了（明明Github Desktop已经很方便了，单独为">
+<meta property="og:description" content="override和new都是用于实现多态的修饰符。 貌似比较通用的译法分别是重写和覆盖，也有分别叫覆盖和隐藏的。个人更倾向于前一种译法，不过也不用在这太纠结。  用法上，二者的区别在于：  override专用于虚拟(virtual)方法、抽象(abstract)方法和接口(interface)，不能用于实方法； 而new则用于实方法，也可用于虚拟方法，但不能用于抽象方法和接口。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-18T07:17:08.971Z">
+<meta property="og:updated_time" content="2018-03-21T13:08:51.735Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="测试一下新的网页提交方式">
-<meta name="twitter:description" content="一般教程里的Hexo都是直接用git来部署到github的。但是我明明已经有了Github Desktop了，为啥不直接用呢？ 大致看了下，发现hexo提交的网页实际应该就是public文件夹的内容。因此我只要通过Github Desktop把这个文件夹的内容提交上去，应该也能实现和hexo deploy一样的效果。而且也不用再安装一个git了（明明Github Desktop已经很方便了，单独为">
+<meta name="twitter:title" content="C#几对修饰符的比较（二）override与new">
+<meta name="twitter:description" content="override和new都是用于实现多态的修饰符。 貌似比较通用的译法分别是重写和覆盖，也有分别叫覆盖和隐藏的。个人更倾向于前一种译法，不过也不用在这太纠结。  用法上，二者的区别在于：  override专用于虚拟(virtual)方法、抽象(abstract)方法和接口(interface)，不能用于实方法； 而new则用于实方法，也可用于虚拟方法，但不能用于抽象方法和接口。">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/18/测试一下新的网页提交方式/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/21/C-几对修饰符的比较（二）override与new/"/>
 
 
 
 
 
-  <title>测试一下新的网页提交方式 | 活着真好。</title>
+  <title>C#几对修饰符的比较（二）override与new | 活着真好。</title>
   
 
 
@@ -273,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/18/测试一下新的网页提交方式/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/21/C-几对修饰符的比较（二）override与new/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tdy">
@@ -290,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">测试一下新的网页提交方式</h1>
+          <h1 class="post-title" itemprop="name headline">C#几对修饰符的比较（二）override与new</h1>
         
 
         <div class="post-meta">
@@ -302,8 +302,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-18T14:50:54+08:00">
-                2018-03-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-21T21:06:24+08:00">
+                2018-03-21
               </time>
             
 
@@ -325,8 +325,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/talk/" itemprop="url" rel="index">
-                    <span itemprop="name">talk</span>
+                  <a href="/categories/develop/" itemprop="url" rel="index">
+                    <span itemprop="name">develop</span>
                   </a>
                 </span>
 
@@ -343,9 +343,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/03/18/测试一下新的网页提交方式/#comments" itemprop="discussionUrl">
+                <a href="/2018/03/21/C-几对修饰符的比较（二）override与new/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/03/18/测试一下新的网页提交方式/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/03/21/C-几对修饰符的比较（二）override与new/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -373,10 +373,29 @@
       
 
       
-        <p>一般教程里的Hexo都是直接用git来部署到github的。<br>但是我明明已经有了Github Desktop了，为啥不直接用呢？</p>
-<p>大致看了下，发现hexo提交的网页实际应该就是public文件夹的内容。因此我只要通过Github Desktop把这个文件夹的内容提交上去，应该也能实现和hexo deploy一样的效果。而且也不用再安装一个git了（明明Github Desktop已经很方便了，单独为了hexo再安个git实在太不优雅了）。最关键的是，看不到用git部署时报的一大堆”warning: LF will be replaced by CRLF”提示了。</p>
-<p>如果这篇文章能正常上传，就证明这种提交方式可行啦。</p>
-<p>之后再研究下怎么把这种提交方式也用hexo deploy指令实现吧，那样就更方便了。</p>
+        <p>override和new都是用于实现多态的修饰符。</p>
+<p>貌似比较通用的译法分别是重写和覆盖，也有分别叫覆盖和隐藏的。个人更倾向于前一种译法，不过也不用在这太纠结。</p>
+<ul>
+<li>用法上，二者的区别在于：</li>
+</ul>
+<pre><code>override专用于虚拟(virtual)方法、抽象(abstract)方法和接口(interface)，不能用于实方法；
+而new则用于实方法，也可用于虚拟方法，但不能用于抽象方法和接口。
+</code></pre><a id="more"></a>
+<ul>
+<li>表现上，二者的区别在于：</li>
+</ul>
+<pre><code>当用子类创建父类，然后调用子类多态过的父类功能时。
+通过override实现多态的功能会调用子类；
+而通过new实现多态的功能仍会调用父类。
+</code></pre><p>代码示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#region 用override（重写）实现virtual方法多态时的表现</span><br><span class="line">/// &lt;summary&gt;</span><br><span class="line">/// 获取有限状态机是否正在运行。</span><br><span class="line">/// &lt;/summary&gt;</span><br><span class="line">public class C1</span><br><span class="line">&#123;</span><br><span class="line">    public virtual string Method()</span><br><span class="line">    &#123;</span><br><span class="line">        return &quot;这里调用了父类方法&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class C2 : C1</span><br><span class="line">&#123;</span><br><span class="line">    public override string GetName()</span><br><span class="line">    &#123;</span><br><span class="line">        return &quot;这里调用了子类方法&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> C1 c1 = new C1();</span><br><span class="line"> Console.WriteLine(c1.GetName());//输出“》》》》这里调用了父类方法《《《《”</span><br><span class="line"></span><br><span class="line"> C2 c2 = new C2();</span><br><span class="line"> Console.WriteLine(c2.GetName());//输出“&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;这里调用了子类方法&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;”</span><br><span class="line"></span><br><span class="line">//当用子类C2创建一个父类C1时</span><br><span class="line"> C1 c3 = new C2();</span><br><span class="line"> Console.WriteLine(c3.GetName());//输出“&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;这里调用了子类方法&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;” </span><br><span class="line"></span><br><span class="line">#endregion</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#region 用new（覆盖）实现virtual方法多态时的表现</span><br><span class="line">/// &lt;summary&gt;</span><br><span class="line">/// 获取有限状态机是否正在运行。</span><br><span class="line">/// &lt;/summary&gt;</span><br><span class="line">public class C1</span><br><span class="line">&#123;</span><br><span class="line">    public virtual string Method()</span><br><span class="line">    &#123;</span><br><span class="line">        return &quot;这里调用了父类方法&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class C2 : C1</span><br><span class="line">&#123;</span><br><span class="line">    public new string GetName()</span><br><span class="line">    &#123;</span><br><span class="line">        return &quot;这里调用了子类方法&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> C1 c1 = new C1();</span><br><span class="line"> Console.WriteLine(c1.GetName());//输出“》》》》这里调用了父类方法《《《《”</span><br><span class="line"></span><br><span class="line"> C2 c2 = new C2();</span><br><span class="line"> Console.WriteLine(c2.GetName());//输出“&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;这里调用了子类方法&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;”</span><br><span class="line"></span><br><span class="line">//当用子类C2创建一个父类C1时</span><br><span class="line"> C1 c3 = new C2();</span><br><span class="line"> Console.WriteLine(c3.GetName());//输出“》》》》这里调用了父类方法《《《《” </span><br><span class="line"></span><br><span class="line">#endregion</span><br></pre></td></tr></table></figure>
+<p><strong>参考</strong>：</p>
+<blockquote>
+<p><a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/classes-and-structs/versioning-with-the-override-and-new-keywords" target="_blank" rel="noopener">使用 Override 和 New 关键字进行版本控制（C# 编程指南）</a></p>
+<p><a href="https://www.cnblogs.com/Look_Sun/p/4551164.html" target="_blank" rel="noopener">C#中重写（override）和覆盖（new）的区别</a></p>
+<p><a href="http://blog.csdn.net/shan9liang/article/details/6777764" target="_blank" rel="noopener">C#方法重载（overload）方法重写（override）隐藏（new）</a></p>
+</blockquote>
 
       
     </div>
@@ -394,9 +413,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/hexo/" rel="tag"># hexo</a>
+            <a href="/tags/代码/" rel="tag"># 代码</a>
           
-            <a href="/tags/github/" rel="tag"># github</a>
+            <a href="/tags/C/" rel="tag"># C#</a>
+          
+            <a href="/tags/多态/" rel="tag"># 多态</a>
           
         </div>
       
@@ -409,8 +430,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/18/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2018/03/20/C-几对修饰符的比较（一）const与readonly/" rel="next" title="C#几对修饰符的比较（一）const与readonly">
+                <i class="fa fa-chevron-left"></i> C#几对修饰符的比较（一）const与readonly
               </a>
             
           </div>
@@ -418,10 +439,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/20/C-几对修饰符的比较（一）const与readonly/" rel="prev" title="C#几对修饰符的比较（一）const与readonly">
-                C#几对修饰符的比较（一）const与readonly <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -719,9 +736,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2018/03/18/测试一下新的网页提交方式/';
-          this.page.identifier = '2018/03/18/测试一下新的网页提交方式/';
-          this.page.title = '测试一下新的网页提交方式';
+          this.page.url = 'http://yoursite.com/2018/03/21/C-几对修饰符的比较（二）override与new/';
+          this.page.identifier = '2018/03/21/C-几对修饰符的比较（二）override与new/';
+          this.page.title = 'C#几对修饰符的比较（二）override与new';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://.disqus.com/embed.js';
