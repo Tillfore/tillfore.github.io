@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans,zh-tw,ja,en,default">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="游戏序章,有限状态机,游戏框架," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="之前讲过要基于Ellan Jiang大神的Unity游戏框架做一个以有限状态机实现的流程控制机制为基础的序章剧情战斗模版DEMO。 因为现在实习公司的序章剧情战斗(注意不是新手引导)完全是程序将整套写死的代码嵌入实现的。也就是说，任何关于序章剧情战斗本身的流程或细节变动，都需要程序开发。我的第一感觉就是，“这么做有问题啊”。">
+<meta name="keywords" content="游戏序章,有限状态机,游戏框架">
+<meta property="og:type" content="article">
+<meta property="og:title" content="游戏序章战斗模板DEMO设计案(上)">
+<meta property="og:url" content="http://yoursite.com/2018/04/05/游戏序章战斗模板DEMO设计案-上/index.html">
+<meta property="og:site_name" content="活着真好。">
+<meta property="og:description" content="之前讲过要基于Ellan Jiang大神的Unity游戏框架做一个以有限状态机实现的流程控制机制为基础的序章剧情战斗模版DEMO。 因为现在实习公司的序章剧情战斗(注意不是新手引导)完全是程序将整套写死的代码嵌入实现的。也就是说，任何关于序章剧情战斗本身的流程或细节变动，都需要程序开发。我的第一感觉就是，“这么做有问题啊”。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-05T08:25:28.667Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="游戏序章战斗模板DEMO设计案(上)">
+<meta name="twitter:description" content="之前讲过要基于Ellan Jiang大神的Unity游戏框架做一个以有限状态机实现的流程控制机制为基础的序章剧情战斗模版DEMO。 因为现在实习公司的序章剧情战斗(注意不是新手引导)完全是程序将整套写死的代码嵌入实现的。也就是说，任何关于序章剧情战斗本身的流程或细节变动，都需要程序开发。我的第一感觉就是，“这么做有问题啊”。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/05/游戏序章战斗模板DEMO设计案-上/"/>
+
+
+
+
+
+  <title>游戏序章战斗模板DEMO设计案(上) | 活着真好。</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">活着真好。</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">加油！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/05/游戏序章战斗模板DEMO设计案-上/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tdy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="活着真好。">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">游戏序章战斗模板DEMO设计案(上)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-05T16:14:42+08:00">
+                2018-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/try/" itemprop="url" rel="index">
+                    <span itemprop="name">try</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/try/design/" itemprop="url" rel="index">
+                    <span itemprop="name">design</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/05/游戏序章战斗模板DEMO设计案-上/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/04/05/游戏序章战斗模板DEMO设计案-上/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>之前讲过要基于Ellan Jiang大神的Unity<a href="http://gameframework.cn/summary" target="_blank" rel="noopener">游戏框架</a>做一个以有限状态机实现的流程控制机制为基础的序章剧情战斗模版DEMO。</p>
+<p>因为现在实习公司的序章剧情战斗(注意不是新手引导)完全是程序将整套写死的代码嵌入实现的。也就是说，任何关于序章剧情战斗本身的流程或细节变动，都需要程序开发。我的第一感觉就是，“这么做有问题啊”。</p>
+<a id="more"></a>
+<p>尽管理论上这也是能实现需求效果的，但在实际研发过程中，这么做就造成了很多问题。比如我们目前是多个核心玩法一致的“换皮”项目同时研发的，结果几个新手战都要程序专门排期从头写一遍，之后反复修改和优化也需要程序全程参与。虽说序章阶段确实有必要投入这般的人力，但是也应当以基本的效率为前提，特别是对程序资源紧张的团队来说。而且这样折腾，最后还是因为时间问题，导致很多细节都来不及优化。</p>
+<p>作为策划，我认为在这方面，理想的研发情况，应当是程序生产强壮的轮子，策划打磨内容的。</p>
+<p>当然，扯了这么多，也不排除我的想法都是错的的可能。不过写一个模版，造一个轮子，总是没有坏处的，就算没什么卵用，也能学习学习嘛。</p>
+<p>目前，我的这个DEMO的底层功能已经基于<a href="http://gameframework.cn/summary" target="_blank" rel="noopener">游戏框架</a>封装好了，<del>其实框架里很多东西都还是知其然而已，</del> 所以直接开始梳理这个模板本身的设计。因为设计和实现都是自己，所以设计案更偏介绍和“TODO”性质一点，一些表现细节，就在实现过程中即兴发挥了。</p>
+<hr>
+<h4 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h4><p>引擎: Unity2017.3.0f3<br>语言: C#</p>
+<h4 id="开发目标"><a href="#开发目标" class="headerlink" title="开发目标"></a>开发目标</h4><ol>
+<li>做一个战斗小游戏（伪），脱离序章模版，也能够独立运行，并接受多类基本操作，表现操作反馈。</li>
+<li>整理实现出几类基本的序章功能，将它们整合到序章模版中，通过<em>读取配表</em>来实现序章剧情战斗，尽量加强模版本身的可移植性。</li>
+<li>在已有操作接口和订阅事件不变的情况下，对战斗小游戏（伪）的任何改动和拓展都不影响序章，反之亦然。<h4 id="进入游戏"><a href="#进入游戏" class="headerlink" title="进入游戏"></a>进入游戏</h4>进入游戏后，会转到主菜单界面（中间的资源载入、场景切换部分已经封装好了，不再表），四个选项吧：常规模式、序章模式、游戏说明、退出游戏。<br>常规模式和序章模式都会进入游戏战斗场景，不过序章模式会启用游戏序章脚本流程（NB_ProcedureScript），读表控制序章剧情战斗。值得一提的是，按照Ellan Jiang大神的框架设计，既然是用游戏模式（GameMode）区分常规游戏和序章，那么序章的脚本执行也应该是在序章模式的GameMain里才对，我现在的做法可能是在给自己挖坑……不过还好只是个DEMO，就算又坑也不会太深，发现了就当学习了吧。<del>也可能我做了一半就发现了其中奥妙，然后转变写法了。</del><br>游戏说明和退出游戏不多说了。</li>
+</ol>
+<h4 id="游戏战斗部分"><a href="#游戏战斗部分" class="headerlink" title="游戏战斗部分"></a>游戏战斗部分</h4><p>游戏战斗部分可以想象成是模拟《战斗之心》（<a href="https://www.taptap.com/app/9820" target="_blank" rel="noopener">BattleHeart</a>）的核心玩法， <del>当然只是模拟意思意思，</del>   将游戏基本表现要素简化到只有plane（代表游戏场景）、shape（代表英雄、敌人等游戏单位）和UI，战斗操作则还是点击单位、点击地面、拖动和点击技能按钮四种。<br><strong>表现要素：</strong>  </p>
+<ul>
+<li>plane:<br>游戏场景，也就是地板，好像没什么好说的，可以变色变贴图。对了,顺便要带个记录场景上所有shape的列表.  </li>
+<li>shape:<br>游戏的基本单位，有ID、阵营、生命值、攻击力、攻击距离、速度、颜色、缩放、技能这些写配表里的字段，以及战斗索引、 位置信息、当前目标、是否自动索敌这些初始化后产生的属性。为了方便，实例化后所有属性都是可以修改的。<br>1.<em>ID</em>：初始化时读表的索引，在游戏里对shape属性一通魔改后，也可以读ID重新从配表获取初属性（如果ID也被魔改了就没办法了）；<br>2.<em>阵营</em>：敌、我，目前初始化时根据这个决定shape形状，敌-立方，我-球体；<br>3.<em>生命值</em>：生命值为0时，会调用死亡方法，为了方便就没有生命上限的概念了，<del>其实也没方便多少</del>。<br>4.<em>当前目标</em>、<em>是否自动索敌</em>：先讲这两个，shape入场后，根据游戏模式（常规or序章）决定是否自动索敌，自动的话，如果当前目标为空，会自动选个不同阵营的shape作为当前目标；<br>5.<em>攻击力</em>、<em>攻击距离</em>：shape的当前目标不为空时,会向当前目标移动，移动到攻击距离范围内后，开始上下跳动，每次跳动会减少目标生命值，减少的值就是攻击力了；<br>6.<em>速度</em>：shape刷新的速率,影响跳动的频率、移动速度这些；<br>7.<em>颜色</em>、<em>缩放</em>：不解释；<br>8.<em>技能</em>：技能ID，shape调用技能方法时，会以这个ID为索引，从技能配表里选择具体的方法，<del>其实对此DEMO而言，这功能时没必要的，纯属练手</del>；<br>9.<em>战斗索引</em>：每个shape初始化后都会放进场景的shap列表里，方便找，这是索引号，事实上，前面的“当前目标”存的也是目标的战斗索引；<br>10.位置信息：就用U3D自带的transform。  </li>
+<li>UI：<br>战斗里的UI主要是技能控件，玩家阵营的shape入场后会在屏幕下方，创建一个按钮，按钮样式或者文字根据技能ID读技能配表，在常规模式下，技能按钮创建后默认可用，序章模式默认不可用，需要脚本开启。<br>点击按钮后，抛出事件指挥shape使用技能shape离场时会关闭按钮。<br>还有血条、指示器、拖线等表现要素，就不一一列举了（可能会省略一些）。<br>此外，屏幕左上角还是需要一个退回到主菜单的按钮的。   </li>
+<li>拓展：<br>1.“是否自动索敌”这类状态属性，如果拓展的话，肯定会增多，之后可以专门做个AI配表，存放这些，然后定义成AIID字段。<br>2.“速度”很可能还是得拆成攻速、移速、刷新频率。<br>3.释放技能的条件还可以增加能量或者怒气这些。</li>
+</ul>
+<p><strong>基本操作：</strong>   </p>
+<ul>
+<li>点击单位：<br>点击场上的shape会选中，一次只能选中一个。选中我方阵营的shape会将该shape作为“点击地面”和“拖动”的操作对象，同时头顶出现指示器，再次点击同一个shape会取消选择。选中敌方阵营的shape会将其设为为所有我方阵营shape的当前目标，同时其头顶出现指示器，再次点击取消选择，但是不改变我方阵营的当前目标了。</li>
+<li>点击地面：<br>选中我方阵营的shape后，点击地面，会让该shape暂时关闭自动索敌，移动到点击位置，然后恢复之前的“是否自动索敌”状态。  </li>
+<li>拖动：<br>选中我方阵营的shape时，不松开点击进行滑动，滑动距离大于阀值后就视为拖动，游戏会进入子弹时间（游戏速度变慢），松手位置为滑动终点。滑动过程会产生UI拖线表现。当滑动终点在地面时，同“点击地面”操作；在敌方阵营的shape上时，将此敌方shape设为选中的我方shape的当前目标。</li>
+<li>点击技能按钮：<br>技能按钮本身就存放了技能释放的主体、技能冷却和技能方法索引，点击后，就抛出事件，指挥技能主体对其当前目标，调用技能方法，并进入冷却。技能冷却时，按钮会变成不可用状态。</li>
+<li>拓展：<br>1.点击单位和拖动操作还可以优化，比如拖动终点为我方其他shape时,可以让选中的shap和那个shap互换位置。不过暂时先实现基本需求吧。<br>2.技能按钮的形式可以更多样化一点,比如拖条、转把之类的，但这就不在DEMO里写了。</li>
+</ul>
+<h4 id="序章模版部分"><a href="#序章模版部分" class="headerlink" title="序章模版部分"></a>序章模版部分</h4><p>之前想的是，序章模版通过在主菜单点击“序章模式”启用，游戏会被序章流程接管，之后进入序章模式游戏主体。不过写完本文后感觉可能把序章模版的逻辑放到序章模式的游戏主逻辑里更符合框架思想。<br>所以这里还得再多考虑下，先把游戏主体写完吧。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/游戏序章/" rel="tag"># 游戏序章</a>
+          
+            <a href="/tags/有限状态机/" rel="tag"># 有限状态机</a>
+          
+            <a href="/tags/游戏框架/" rel="tag"># 游戏框架</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/03/域名备案完了/" rel="next" title="域名备案完了">
+                <i class="fa fa-chevron-left"></i> 域名备案完了
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Tdy" />
+            
+              <p class="site-author-name" itemprop="name">Tdy</p>
+              <p class="site-description motion-element" itemprop="description">在此记录一些游戏设计和开发相关的内容。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#开发环境"><span class="nav-number">1.</span> <span class="nav-text">开发环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开发目标"><span class="nav-number">2.</span> <span class="nav-text">开发目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进入游戏"><span class="nav-number">3.</span> <span class="nav-text">进入游戏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#游戏战斗部分"><span class="nav-number">4.</span> <span class="nav-text">游戏战斗部分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#序章模版部分"><span class="nav-number">5.</span> <span class="nav-text">序章模版部分</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tdy</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/04/05/游戏序章战斗模板DEMO设计案-上/';
+          this.page.identifier = '2018/04/05/游戏序章战斗模板DEMO设计案-上/';
+          this.page.title = '游戏序章战斗模板DEMO设计案(上)';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
