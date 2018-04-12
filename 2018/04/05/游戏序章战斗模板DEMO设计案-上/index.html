@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="活着真好。">
 <meta property="og:description" content="之前讲过要基于Ellan Jiang大神的Unity游戏框架做一个以有限状态机实现的流程控制机制为基础的序章剧情战斗模版DEMO。 因为现在实习公司的序章剧情战斗(注意不是新手引导)完全是程序将整套写死的代码嵌入实现的。也就是说，任何关于序章剧情战斗本身的流程或细节变动，都需要程序开发。我的第一感觉就是，“这么做有问题啊”。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-05T08:25:28.667Z">
+<meta property="og:updated_time" content="2018-04-08T16:30:43.542Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="游戏序章战斗模板DEMO设计案(上)">
 <meta name="twitter:description" content="之前讲过要基于Ellan Jiang大神的Unity游戏框架做一个以有限状态机实现的流程控制机制为基础的序章剧情战斗模版DEMO。 因为现在实习公司的序章剧情战斗(注意不是新手引导)完全是程序将整套写死的代码嵌入实现的。也就是说，任何关于序章剧情战斗本身的流程或细节变动，都需要程序开发。我的第一感觉就是，“这么做有问题啊”。">
@@ -400,7 +400,7 @@
 </ol>
 <h4 id="游戏战斗部分"><a href="#游戏战斗部分" class="headerlink" title="游戏战斗部分"></a>游戏战斗部分</h4><p>游戏战斗部分可以想象成是模拟《战斗之心》（<a href="https://www.taptap.com/app/9820" target="_blank" rel="noopener">BattleHeart</a>）的核心玩法， <del>当然只是模拟意思意思，</del>   将游戏基本表现要素简化到只有plane（代表游戏场景）、shape（代表英雄、敌人等游戏单位）和UI，战斗操作则还是点击单位、点击地面、拖动和点击技能按钮四种。<br><strong>表现要素：</strong>  </p>
 <ul>
-<li>plane:<br>游戏场景，也就是地板，好像没什么好说的，可以变色变贴图。对了,顺便要带个记录场景上所有shape的列表.  </li>
+<li>plane:<br>游戏场景，也就是地板，好像没什么好说的，可以变色变贴图。  </li>
 <li>shape:<br>游戏的基本单位，有ID、阵营、生命值、攻击力、攻击距离、速度、颜色、缩放、技能这些写配表里的字段，以及战斗索引、 位置信息、当前目标、是否自动索敌这些初始化后产生的属性。为了方便，实例化后所有属性都是可以修改的。<br>1.<em>ID</em>：初始化时读表的索引，在游戏里对shape属性一通魔改后，也可以读ID重新从配表获取初属性（如果ID也被魔改了就没办法了）；<br>2.<em>阵营</em>：敌、我，目前初始化时根据这个决定shape形状，敌-立方，我-球体；<br>3.<em>生命值</em>：生命值为0时，会调用死亡方法，为了方便就没有生命上限的概念了，<del>其实也没方便多少</del>。<br>4.<em>当前目标</em>、<em>是否自动索敌</em>：先讲这两个，shape入场后，根据游戏模式（常规or序章）决定是否自动索敌，自动的话，如果当前目标为空，会自动选个不同阵营的shape作为当前目标；<br>5.<em>攻击力</em>、<em>攻击距离</em>：shape的当前目标不为空时,会向当前目标移动，移动到攻击距离范围内后，开始上下跳动，每次跳动会减少目标生命值，减少的值就是攻击力了；<br>6.<em>速度</em>：shape刷新的速率,影响跳动的频率、移动速度这些；<br>7.<em>颜色</em>、<em>缩放</em>：不解释；<br>8.<em>技能</em>：技能ID，shape调用技能方法时，会以这个ID为索引，从技能配表里选择具体的方法，<del>其实对此DEMO而言，这功能时没必要的，纯属练手</del>；<br>9.<em>战斗索引</em>：每个shape初始化后都会放进场景的shap列表里，方便找，这是索引号，事实上，前面的“当前目标”存的也是目标的战斗索引；<br>10.位置信息：就用U3D自带的transform。  </li>
 <li>UI：<br>战斗里的UI主要是技能控件，玩家阵营的shape入场后会在屏幕下方，创建一个按钮，按钮样式或者文字根据技能ID读技能配表，在常规模式下，技能按钮创建后默认可用，序章模式默认不可用，需要脚本开启。<br>点击按钮后，抛出事件指挥shape使用技能shape离场时会关闭按钮。<br>还有血条、指示器、拖线等表现要素，就不一一列举了（可能会省略一些）。<br>此外，屏幕左上角还是需要一个退回到主菜单的按钮的。   </li>
 <li>拓展：<br>1.“是否自动索敌”这类状态属性，如果拓展的话，肯定会增多，之后可以专门做个AI配表，存放这些，然后定义成AIID字段。<br>2.“速度”很可能还是得拆成攻速、移速、刷新频率。<br>3.释放技能的条件还可以增加能量或者怒气这些。</li>
@@ -551,7 +551,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -562,7 +562,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -573,7 +573,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
