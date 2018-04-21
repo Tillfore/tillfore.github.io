@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="代码,C#,多态," />
+  <meta name="keywords" content="设计目的,逆推,吃杯面的凄惨夜晚," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="override和new都是用于实现多态的修饰符。 貌似比较通用的译法分别是重写和覆盖，也有分别叫覆盖和隐藏的。个人更倾向于前一种译法，不过也不用在这太纠结。  用法上，二者的区别在于：  override专用于虚拟(virtual)方法、抽象(abstract)方法和接口(interface)，不能用于实方法； 而new则用于实方法，也可用于虚拟方法，但不能用于抽象方法和接口。">
-<meta name="keywords" content="代码,C#,多态">
+<meta name="description" content="来上海后，经常听到”设计目的”这个词。很多时候，我们在讨论一个新的玩法、机制的时候，都会先被质问设计目的。但很多人在讨论中往往会陷入这样一种逻辑错误：设计A能够实现目的1，所以设计A是实现目的1的必要条件。而实际上，能够实现目的1的设计方案有很多，比如ABCDEFG，但为什么要选择A，或者说当下为什么要先做A，才是真正需要讨论的。 认识到这点之后，我立刻对从前诸如“你觉得XXX的设计目的是什么”这">
+<meta name="keywords" content="设计目的,逆推,吃杯面的凄惨夜晚">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C#几对修饰符的比较（二）override与new">
-<meta property="og:url" content="http://yoursite.com/2018/03/21/C-几对修饰符的比较（二）override与new/index.html">
+<meta property="og:title" content="关于逆推设计的一个比喻">
+<meta property="og:url" content="http://yoursite.com/2018/04/21/关于逆推设计的一个比喻/index.html">
 <meta property="og:site_name" content="活着真好。">
-<meta property="og:description" content="override和new都是用于实现多态的修饰符。 貌似比较通用的译法分别是重写和覆盖，也有分别叫覆盖和隐藏的。个人更倾向于前一种译法，不过也不用在这太纠结。  用法上，二者的区别在于：  override专用于虚拟(virtual)方法、抽象(abstract)方法和接口(interface)，不能用于实方法； 而new则用于实方法，也可用于虚拟方法，但不能用于抽象方法和接口。">
+<meta property="og:description" content="来上海后，经常听到”设计目的”这个词。很多时候，我们在讨论一个新的玩法、机制的时候，都会先被质问设计目的。但很多人在讨论中往往会陷入这样一种逻辑错误：设计A能够实现目的1，所以设计A是实现目的1的必要条件。而实际上，能够实现目的1的设计方案有很多，比如ABCDEFG，但为什么要选择A，或者说当下为什么要先做A，才是真正需要讨论的。 认识到这点之后，我立刻对从前诸如“你觉得XXX的设计目的是什么”这">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-21T13:08:51.735Z">
+<meta property="og:updated_time" content="2018-04-21T16:41:15.905Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C#几对修饰符的比较（二）override与new">
-<meta name="twitter:description" content="override和new都是用于实现多态的修饰符。 貌似比较通用的译法分别是重写和覆盖，也有分别叫覆盖和隐藏的。个人更倾向于前一种译法，不过也不用在这太纠结。  用法上，二者的区别在于：  override专用于虚拟(virtual)方法、抽象(abstract)方法和接口(interface)，不能用于实方法； 而new则用于实方法，也可用于虚拟方法，但不能用于抽象方法和接口。">
+<meta name="twitter:title" content="关于逆推设计的一个比喻">
+<meta name="twitter:description" content="来上海后，经常听到”设计目的”这个词。很多时候，我们在讨论一个新的玩法、机制的时候，都会先被质问设计目的。但很多人在讨论中往往会陷入这样一种逻辑错误：设计A能够实现目的1，所以设计A是实现目的1的必要条件。而实际上，能够实现目的1的设计方案有很多，比如ABCDEFG，但为什么要选择A，或者说当下为什么要先做A，才是真正需要讨论的。 认识到这点之后，我立刻对从前诸如“你觉得XXX的设计目的是什么”这">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/21/C-几对修饰符的比较（二）override与new/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/21/关于逆推设计的一个比喻/"/>
 
 
 
 
 
-  <title>C#几对修饰符的比较（二）override与new | 活着真好。</title>
+  <title>关于逆推设计的一个比喻 | 活着真好。</title>
   
 
 
@@ -273,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/21/C-几对修饰符的比较（二）override与new/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/21/关于逆推设计的一个比喻/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tdy">
@@ -290,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">C#几对修饰符的比较（二）override与new</h1>
+          <h1 class="post-title" itemprop="name headline">关于逆推设计的一个比喻</h1>
         
 
         <div class="post-meta">
@@ -302,8 +302,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-21T21:06:24+08:00">
-                2018-03-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-21T23:56:24+08:00">
+                2018-04-21
               </time>
             
 
@@ -325,8 +325,19 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/develop/" itemprop="url" rel="index">
-                    <span itemprop="name">develop</span>
+                  <a href="/categories/design/" itemprop="url" rel="index">
+                    <span itemprop="name">design</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/design/talk/" itemprop="url" rel="index">
+                    <span itemprop="name">talk</span>
                   </a>
                 </span>
 
@@ -343,9 +354,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/03/21/C-几对修饰符的比较（二）override与new/#comments" itemprop="discussionUrl">
+                <a href="/2018/04/21/关于逆推设计的一个比喻/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/03/21/C-几对修饰符的比较（二）override与new/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/04/21/关于逆推设计的一个比喻/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -373,29 +384,12 @@
       
 
       
-        <p>override和new都是用于实现多态的修饰符。</p>
-<p>貌似比较通用的译法分别是重写和覆盖，也有分别叫覆盖和隐藏的。个人更倾向于前一种译法，不过也不用在这太纠结。</p>
-<ul>
-<li>用法上，二者的区别在于：</li>
-</ul>
-<pre><code>override专用于虚拟(virtual)方法、抽象(abstract)方法和接口(interface)，不能用于实方法；
-而new则用于实方法，也可用于虚拟方法，但不能用于抽象方法和接口。
-</code></pre><a id="more"></a>
-<ul>
-<li>表现上，二者的区别在于：</li>
-</ul>
-<pre><code>当用子类创建父类，然后调用子类多态过的父类功能时。
-通过override实现多态的功能会调用子类；
-而通过new实现多态的功能仍会调用父类。
-</code></pre><p>代码示例:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#region 用override（重写）实现virtual方法多态时的表现</span><br><span class="line">/// &lt;summary&gt;</span><br><span class="line">/// 获取有限状态机是否正在运行。</span><br><span class="line">/// &lt;/summary&gt;</span><br><span class="line">public class C1</span><br><span class="line">&#123;</span><br><span class="line">    public virtual string Method()</span><br><span class="line">    &#123;</span><br><span class="line">        return &quot;这里调用了父类方法&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class C2 : C1</span><br><span class="line">&#123;</span><br><span class="line">    public override string GetName()</span><br><span class="line">    &#123;</span><br><span class="line">        return &quot;这里调用了子类方法&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> C1 c1 = new C1();</span><br><span class="line"> Console.WriteLine(c1.GetName());//输出“》》》》这里调用了父类方法《《《《”</span><br><span class="line"></span><br><span class="line"> C2 c2 = new C2();</span><br><span class="line"> Console.WriteLine(c2.GetName());//输出“&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;这里调用了子类方法&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;”</span><br><span class="line"></span><br><span class="line">//当用子类C2创建一个父类C1时</span><br><span class="line"> C1 c3 = new C2();</span><br><span class="line"> Console.WriteLine(c3.GetName());//输出“&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;这里调用了子类方法&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;” </span><br><span class="line"></span><br><span class="line">#endregion</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#region 用new（覆盖）实现virtual方法多态时的表现</span><br><span class="line">/// &lt;summary&gt;</span><br><span class="line">/// 获取有限状态机是否正在运行。</span><br><span class="line">/// &lt;/summary&gt;</span><br><span class="line">public class C1</span><br><span class="line">&#123;</span><br><span class="line">    public virtual string Method()</span><br><span class="line">    &#123;</span><br><span class="line">        return &quot;这里调用了父类方法&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class C2 : C1</span><br><span class="line">&#123;</span><br><span class="line">    public new string GetName()</span><br><span class="line">    &#123;</span><br><span class="line">        return &quot;这里调用了子类方法&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> C1 c1 = new C1();</span><br><span class="line"> Console.WriteLine(c1.GetName());//输出“》》》》这里调用了父类方法《《《《”</span><br><span class="line"></span><br><span class="line"> C2 c2 = new C2();</span><br><span class="line"> Console.WriteLine(c2.GetName());//输出“&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;这里调用了子类方法&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;”</span><br><span class="line"></span><br><span class="line">//当用子类C2创建一个父类C1时</span><br><span class="line"> C1 c3 = new C2();</span><br><span class="line"> Console.WriteLine(c3.GetName());//输出“》》》》这里调用了父类方法《《《《” </span><br><span class="line"></span><br><span class="line">#endregion</span><br></pre></td></tr></table></figure>
-<p><strong>参考</strong>：</p>
-<blockquote>
-<p><a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/classes-and-structs/versioning-with-the-override-and-new-keywords" target="_blank" rel="noopener">使用 Override 和 New 关键字进行版本控制（C# 编程指南）</a></p>
-<p><a href="https://www.cnblogs.com/Look_Sun/p/4551164.html" target="_blank" rel="noopener">C#中重写（override）和覆盖（new）的区别</a></p>
-<p><a href="http://blog.csdn.net/shan9liang/article/details/6777764" target="_blank" rel="noopener">C#方法重载（overload）方法重写（override）隐藏（new）</a></p>
-</blockquote>
+        <p>来上海后，经常听到”设计目的”这个词。很多时候，我们在讨论一个新的玩法、机制的时候，都会先被质问设计目的。<br>但很多人在讨论中往往会陷入这样一种逻辑错误：设计A能够实现目的1，所以设计A是实现目的1的必要条件。<br>而实际上，能够实现目的1的设计方案有很多，比如ABCDEFG，但为什么要选择A，或者说当下为什么要先做A，才是真正需要讨论的。</p>
+<p>认识到这点之后，我立刻对从前诸如“你觉得XXX的设计目的是什么”这样的逆推问题，有了新的认识。<br><a id="more"></a><br>如果单纯地思考某一设计的所谓“设计目的”，我很容易想出一大堆听上去合情合理的，但实际上，一个优秀的设计，它的出发点可能并非如此，<br>我们真正应该回答的“设计目的”并非是“设计带来的（有益）影响”，可能多去思考“能否用别的设计去实现这些目的”以及“采用这些设计带来的利弊”更有价值。</p>
+<p>以这样的方法论思考，能够更有效地明白，设计师在做出XXX设计时，权衡利弊后，真正重视到的东西。<br>当然这一方法论建立在“任何设计都应是有利有弊的”这一前提下，我相信即使是杰出游戏的优秀设计，也一定是有利弊，需要辩证看待的。</p>
+<p>最后，讲一个我在梳理上面想法时的一个灵感来源，可以作为相关比喻或者说寓言吧。</p>
+<p>某天，我拆开合味道的杯面，发现里头的塑料叉是蓝色的，勤于思考的我，觉得不太对劲，总觉得这么做是有“设计目的”的。<br>为什么这塑料叉不是白色的而是蓝色的呢？ 当时我想了下，觉得是因为：<br>合味道杯面不需要拆调料包，打开倒水就行了，用户很可能忘记把叉子拿出来，所以要用个突兀的颜色提醒用户注意，而蓝色，正好是面条黄色的反色，最突兀。<br>多么完美的逆推设计啊~<br>我一度沾沾自喜，直到今天，我拆开“意大利牛肉风味”的合味道，发现叉子是橙色的……</p>
+<p>后记：听说已经有新版的合味道，专门加了层隔断来放叉子？</p>
 
       
     </div>
@@ -413,11 +407,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/代码/" rel="tag"># 代码</a>
+            <a href="/tags/设计目的/" rel="tag"># 设计目的</a>
           
-            <a href="/tags/C/" rel="tag"># C#</a>
+            <a href="/tags/逆推/" rel="tag"># 逆推</a>
           
-            <a href="/tags/多态/" rel="tag"># 多态</a>
+            <a href="/tags/吃杯面的凄惨夜晚/" rel="tag"># 吃杯面的凄惨夜晚</a>
           
         </div>
       
@@ -430,8 +424,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/20/C-几对修饰符的比较（一）const与readonly/" rel="next" title="C#几对修饰符的比较（一）const与readonly">
-                <i class="fa fa-chevron-left"></i> C#几对修饰符的比较（一）const与readonly
+              <a href="/2018/04/15/C-几对修饰符的比较（三）implicit与explicit/" rel="next" title="C#几对修饰符的比较（三）implicit与explicit">
+                <i class="fa fa-chevron-left"></i> C#几对修饰符的比较（三）implicit与explicit
               </a>
             
           </div>
@@ -439,10 +433,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/03/域名备案完了/" rel="prev" title="域名备案完了">
-                域名备案完了 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -740,9 +730,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2018/03/21/C-几对修饰符的比较（二）override与new/';
-          this.page.identifier = '2018/03/21/C-几对修饰符的比较（二）override与new/';
-          this.page.title = 'C#几对修饰符的比较（二）override与new';
+          this.page.url = 'http://yoursite.com/2018/04/21/关于逆推设计的一个比喻/';
+          this.page.identifier = '2018/04/21/关于逆推设计的一个比喻/';
+          this.page.title = '关于逆推设计的一个比喻';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://.disqus.com/embed.js';
